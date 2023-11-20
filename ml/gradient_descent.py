@@ -1,46 +1,51 @@
-# Gradient Descent Algorithm
+# Problem Statement: 
+# Implement Gradient Descent Algorithm to find the local minima of a function.
+# For example, find the local minima of the function y=(x+3)² starting from the point x=2.
 
-def gradient_descent(x, learning_rate, epochs):
-    # Function to minimize: y = (x + 3)^2
-    def function_to_minimize(x):
-        return (x + 3)**2
-    
-    # Initialize variables
-    x_values = [x]
-    y_values = [function_to_minimize(x)]
-    
-    # Gradient Descent iterations
-    for epoch in range(epochs):
-        gradient = 2 * (x + 3)  # Gradient of the function
-        x = x - learning_rate * gradient  # Update x using the gradient descent formula
-        
-        # Save current values for plotting
-        x_values.append(x)
-        y_values.append(function_to_minimize(x))
-        
-    return x_values, y_values
+import numpy as np
 
-# Set initial parameters
-initial_x = 2
+def func(x):
+    return (x-3)**2
+
+def derivative(x):
+    return 2*(x-3)
+
 learning_rate = 0.1
-epochs = 50
+max_iterations = 100
+precision = 0.0001
 
-# Run gradient descent
-x_values, y_values = gradient_descent(initial_x, learning_rate, epochs)
+x = 2
 
-# Print the result
-print("Local Minimum:", x_values[-1])
+converged = False
+for i in range(max_iterations):
+    x_old = x
+    gradient = derivative(x_old)
+    x = x - gradient*learning_rate
+    print(f"iteration {i}: x = {x} and f(x) = {func(x)}")
+    print(f"absolute difference = {abs(func(x)-func(x_old))}")
+    if abs(func(x)-func(x_old)) < precision:
+        converged = True
+        break    
 
-# Plot the function and the steps taken by the gradient descent algorithm
+if converged == True:
+    print(f"We found convergence at x = {x} where value of function is {func(x)}")
+else:
+    print(f"No convergence found in {max_iterations} iterations!")
+
+# Plot the function
 import matplotlib.pyplot as plt
 
-x_values_plot = [i for i in range(-8, 4)]
-y_values_plot = [(x + 3)**2 for x in x_values_plot]
+x_values = np.linspace(-2, 8, 100)
+y_values = func(x_values)
 
-plt.plot(x_values_plot, y_values_plot, label='Function: y=(x + 3)^2')
-plt.scatter(x_values, y_values, color='red', label='Gradient Descent Steps')
-plt.title('Gradient Descent to Find Local Minimum')
-plt.xlabel('x')
-plt.ylabel('y')
+plt.plot(x_values, y_values, label = '$(x-3)^2$')
+plt.
+plt.xlabel = 'x'
+plt.ylabel = 'f(x)'
+plt.title = 'Plot of the function f(x) = $(x-3)^2$'
 plt.legend()
+plt.grid(True)
 plt.show()
+
+help(np.linspace)
+
